@@ -1,6 +1,8 @@
 .ember-light-table {
-  height: auto;
+  height: inherit;
   overflow: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .ember-light-table table {
@@ -19,10 +21,30 @@
   visibility: hidden;
 }
 
-.ember-light-table .lt-body-wrap {
+.ember-light-table .lt-head-wrap,
+.ember-light-table .lt-foot-wrap {
   overflow-y: auto;
   overflow-x: hidden;
-  height: inherit;
+}
+
+.ember-light-table .lt-head-wrap,
+.ember-light-table .lt-foot-wrap {
+  flex: 0 1 auto;
+}
+
+.ember-light-table .lt-body-wrap {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+}
+
+.ember-light-table .lt-column {
+  position: relative;
+}
+
+.ember-light-table .lt-scrollable {
+  width: 100%;
+  flex: 1 0 auto;
 }
 
 .ember-light-table .align-left {
@@ -43,6 +65,17 @@
 
 .ember-light-table .lt-column.is-sortable {
   cursor: pointer;
+  user-select: none;
+}
+
+.ember-light-table .lt-column .lt-column-resizer {
+  width: 5px;
+  cursor: col-resize;
+  height: 100%;
+  background: transparent;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 
 .ember-light-table .lt-row.is-expandable,

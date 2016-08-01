@@ -3,19 +3,6 @@ import Column from './classes/Column';
 import Row from './classes/Row';
 
 /**
- * A lightweight contextual component based table addon that follows Ember's actions up, data down ideology.
- *
- * ## Features
- *
- * * Custom component based column headers and cells
- * * Infinite scroll support
- * * Select & Multi-select
- * * Grouped columns
- * * Expandable rows
- * * Easy table manipulation
- * * Easy override to table header and footer
- * * Contextual component for header, body, and footer, as well as loading, no data, and expanded row
- *
  * ## Installation
  * ```shell
  * ember install ember-light-table
@@ -104,7 +91,7 @@ import Row from './classes/Row';
  *       {{/body.loader}}
  *     {{/if}}
  *
- *     {{#if table.isEmpty)}}
+ *     {{#if table.isEmpty}}
  *       {{#body.no-data}}
  *         No users found.
  *       {{/body.no-data}}
@@ -118,7 +105,7 @@ import Row from './classes/Row';
  * Please note that each of these contextual components have a wide array of options so it is advised to look
  * through the documentation.
  *
- * @module Home
+ * @module Usage
  */
 export default Table;
 export { Table, Column, Row };

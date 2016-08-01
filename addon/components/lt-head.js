@@ -1,9 +1,16 @@
 import Ember from 'ember';
-import layout from '../templates/components/lt-head';
-import TableHeaderMixin from '../mixins/table-header';
+import layout from 'ember-light-table/templates/components/lt-head';
+import TableHeaderMixin from 'ember-light-table/mixins/table-header';
+
+const {
+  assert,
+  Component,
+  isEmpty,
+  set
+} = Ember;
 
 /**
- * @module Components
+ * @module Light Table
  */
 
 /**
@@ -28,12 +35,24 @@ import TableHeaderMixin from '../mixins/table-header';
  * If you dont have grouped columns, the yielded `groups` will be an array of all visibile columns and `subColumns`
  * will be empty
  *
- * @class Head
- * @uses TableColumnMixin
+ * @class t.head
+ * @uses TableHeaderMixin
  */
 
-export default Ember.Component.extend(TableHeaderMixin, {
+export default Component.extend(TableHeaderMixin, {
   layout,
   classNames: ['lt-head-wrap'],
-  table: null
+  table: null,
+  sharedOptions: null,
+
+  init() {
+    this._super(...arguments);
+
+    const sharedOptions = this.get('sharedOptions') || {};
+    const fixed = this.get('fixed');
+
+    assert('[ember-light-table] The height property is required for fixed header', !fixed || fixed && !isEmpty(sharedOptions.height));
+
+    set(sharedOptions, 'fixedHeader', fixed);
+  }
 });

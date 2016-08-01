@@ -7,10 +7,17 @@ const {
 } = Ember;
 
  /**
-  * @module Classes
+  * @module Table
   * @class Column
   */
 export default class Column extends Ember.Object.extend({
+  /**
+   * @property hideable
+   * @type {Boolean}
+   * @default true
+   */
+  hideable: true,
+
   /**
    * @property hidden
    * @type {Boolean}
@@ -31,6 +38,13 @@ export default class Column extends Ember.Object.extend({
    * @default true
    */
   sortable: true,
+
+  /**
+   * @property resizable
+   * @type {Boolean}
+   * @default false
+   */
+  resizable: false,
 
   /**
    * @property sorted
@@ -64,15 +78,56 @@ export default class Column extends Ember.Object.extend({
   subColumns: null,
 
   /**
-   * Component name for the column header
-   * @property headerComponent
+   * Type of column component
+   *
+   * You can create your own column types by running the blueprint:
+   * `ember g column-type my-column-type`
+   *
+   * This will generate a component for you which represents the `<th>`
+   * element for the column. If you want to apply custom actions to the `th`,
+   * or do some custom styling of the `th` with classNameBindings, all of that is
+   * available to you in this component.
+   *
+   * You can then specify the custom type you created as a string here, to use it.
+   *
+   *
+   * @property type
+   * @type {String}
+   * @default 'base'
+   */
+  type: 'base',
+
+  /**
+   * Type of cell component
+   *
+   * You can create your own cell types by running the blueprint:
+   * `ember g cell-type my-cell-type`
+   *
+   * This will generate a component for you which represents the `<td>`
+   * cells in the column. If you want to apply custom actions to the `td`,
+   * or do some custom styling of the `td` with classNameBindings, all of that is
+   * available to you in this component.
+   *
+   * You can then specify the custom type you created as a string here, to use it.
+   *
+   * @property cellType
+   * @type {String}
+   * @default 'base'
+   */
+  cellType: 'base',
+
+  /**
+   * Component name for the column
+   * @property component
    * @type {String}
    * @optional
    */
-  headerComponent: null,
+  component: null,
 
   /**
-   * Component name for the column cells
+   * Component name for the column cells. This component is automatically passed row,
+   * column, and value variables, and you can specify a valuePath to set what property
+   * the value is set to.
    * @property cellComponent
    * @type {String}
    * @optional
@@ -90,6 +145,22 @@ export default class Column extends Ember.Object.extend({
    * @type {String}
    */
   width: null,
+
+  /**
+   * Class names to be applied to header and footer cells of this column
+   *
+   * @property classNames
+   * @type {String | Array}
+   */
+  classNames: null,
+
+  /**
+   * Class names to be applied to all cells of this column
+   *
+   * @property cellClassNames
+   * @type {String | Array}
+   */
+  cellClassNames: null,
 
   /**
    * A format function used to calculate a cell's value

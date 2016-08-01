@@ -1,9 +1,16 @@
 import Ember from 'ember';
-import layout from '../templates/components/lt-foot';
-import TableHeaderMixin from '../mixins/table-header';
+import layout from 'ember-light-table/templates/components/lt-foot';
+import TableHeaderMixin from 'ember-light-table/mixins/table-header';
+
+const {
+  assert,
+  Component,
+  isEmpty,
+  set
+} = Ember;
 
 /**
- * @module Components
+ * @module Light Table
  */
 
 /**
@@ -25,12 +32,25 @@ import TableHeaderMixin from '../mixins/table-header';
  * ```
  *
  * will be empty
- * @class Foot
- * @uses TableColumnMixin
+ *
+ * @class t.foot
+ * @uses TableHeaderMixin
  */
 
-export default Ember.Component.extend(TableHeaderMixin, {
+export default Component.extend(TableHeaderMixin, {
   layout,
   classNames: ['lt-foot-wrap'],
-  table: null
+  table: null,
+  sharedOptions: null,
+
+  init() {
+    this._super(...arguments);
+
+    const sharedOptions = this.get('sharedOptions') || {};
+    const fixed = this.get('fixed');
+
+    assert('[ember-light-table] The height property is required for fixed footer', !fixed || fixed && !isEmpty(sharedOptions.height));
+
+    set(sharedOptions, 'fixedFooter', fixed);
+  }
 });

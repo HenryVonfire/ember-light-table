@@ -1,8 +1,0 @@
-{{#if column.headerComponent}}
-  {{component column.headerComponent tableActions=tableActions sortIcons=sortIcons column=column}}
-{{else}}
-  {{column.label}}
-  {{#if column.sorted}}
-    <span class="lt-sort-icon {{if column.ascending sortIcons.iconAscending sortIcons.iconDescending}}"></span>
-  {{/if}}
-{{/if}}

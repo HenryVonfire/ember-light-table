@@ -1,12 +1,12 @@
 import Ember from 'ember';
-import callAction from '../utils/call-action';
+import callAction from 'ember-light-table/utils/call-action';
 
 const {
   computed
 } = Ember;
 
 /**
- * @module Mixins
+ * @module Light Table
  */
 
 /**
@@ -16,6 +16,26 @@ const {
  */
 
 export default Ember.Mixin.create({
+  /**
+   * @property table
+   * @type {Table}
+   * @private
+   */
+  table: null,
+
+  /**
+   * @property sharedOptions
+   * @type {Object}
+   * @private
+   */
+  sharedOptions: null,
+
+  /**
+   * @property tableActions
+   * @type {Object}
+   */
+  tableActions: null,
+
   /**
    * @property fixed
    * @type {Boolean}
@@ -58,13 +78,13 @@ export default Ember.Mixin.create({
   tableId: null,
 
   renderInPlace: computed.oneWay('fixed'),
-  visibleColumnGroups: computed.oneWay('table.visibleColumnGroups'),
-  visibleSubColumns: computed.oneWay('table.visibleSubColumns'),
-  visibleColumns: computed.oneWay('table.visibleColumns'),
+  columnGroups: computed.readOnly('table.visibleColumnGroups'),
+  subColumns: computed.readOnly('table.visibleSubColumns'),
+  columns: computed.readOnly('table.visibleColumns'),
 
   sortIcons: computed('iconAscending', 'iconDescending', function() {
     return this.getProperties(['iconAscending', 'iconDescending']);
-  }),
+  }).readOnly(),
 
   actions: {
     /**
@@ -98,5 +118,16 @@ export default Ember.Mixin.create({
     onColumnDoubleClick(/* column */) {
       callAction(this, 'onColumnDoubleClick', ...arguments);
     },
+
+    /**
+     * onColumnResized action.
+     *
+     * @method onColumnResized
+     * @param  {Column}   column The column that was resized
+     * @param  {String}   width  The final width of the column
+     */
+    onColumnResized(/* column, width */) {
+      callAction(this, 'onColumnResized', ...arguments);
+    }
   }
 });
